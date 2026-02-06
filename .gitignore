@@ -1,0 +1,9 @@
+.angular
+dist
+node_modules
+.env
+.angular/cache/
+src/environments/
+proxy.conf.json
+package-lock.json
+node_modules/.package-lock.json

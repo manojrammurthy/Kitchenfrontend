@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My app</title>
+    <meta charset="UTF-8" />
+    <base href="/">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+  <!-- Progress bar only for initial load -->
+  <div id="initial-loading-bar-container">
+    <div id="initial-loading-bar"></div>
+  </div>
+
+  <app-root></app-root>
+
+  <style>
+    #initial-loading-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: transparent;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    #initial-loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      animation: fillBar 1.5s ease forwards;
+    }
+
+    @keyframes fillBar {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script>
+    // Keep checking if Angular has fully bootstrapped
+    const checkAngularReady = setInterval(() => {
+      const appRoot = document.querySelector('app-root');
+
+      // Angular adds ng-version when it's ready
+      if (appRoot && appRoot.hasAttribute('ng-version')) {
+        const loader = document.getElementById('initial-loading-bar-container');
+        if (loader) {
+          loader.style.transition = 'opacity 0.4s ease';
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }
+        clearInterval(checkAngularReady);
+      }
+    }, 100);
+  </script>
+</body>
+
+
+
+</html>
